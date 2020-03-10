@@ -222,33 +222,8 @@ esp_err_t sdmmc_enable_hs_mode_and_check(sdmmc_card_t* card)
     if (err != ESP_OK) {
         return err;
     }
-    /* HS mode has been enabled on the card.
-     * Read CSD again, it should now indicate that the card supports
-     * 50MHz clock.
-     * Since SEND_CSD is allowed only in standby mode, and the card is
-     * currently in data transfer more, deselect the card first, then
-     * get the CSD, then select the card again.
-     */
-    err = sdmmc_send_cmd_select_card(card, 0);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "%s: select_card (1) returned 0x%x", __func__, err);
-        return err;
-    }
-    err = sdmmc_send_cmd_send_csd(card, &card->csd);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "%s: send_csd returned 0x%x", __func__, err);
-        return err;
-    }
-    err = sdmmc_send_cmd_select_card(card, card->rca);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "%s: select_card (2) returned 0x%x", __func__, err);
-        return err;
-    }
-
-    if (card->csd.tr_speed != 50000000) {
-        ESP_LOGW(TAG, "unexpected: after enabling HS mode, tr_speed=%d", card->csd.tr_speed);
-        return ESP_ERR_NOT_SUPPORTED;
-    }
+    
+    //here nothing!
 
     card->max_freq_khz = SDMMC_FREQ_HIGHSPEED;
     return ESP_OK;
