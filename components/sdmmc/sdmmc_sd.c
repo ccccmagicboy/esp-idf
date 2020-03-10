@@ -224,6 +224,7 @@ esp_err_t sdmmc_enable_hs_mode_and_check(sdmmc_card_t* card)
     }
 
     //no thing here!
+    card->csd.tr_speed = 50000000
     
     card->max_freq_khz = SDMMC_FREQ_HIGHSPEED;
     return ESP_OK;
